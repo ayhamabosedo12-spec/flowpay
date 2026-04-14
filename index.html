@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FlowPay</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial;
+    background: linear-gradient(135deg, #141e30, #243b55);
+    color: white;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* الصندوق */
+.container {
+    text-align: center;
+    background: rgba(255,255,255,0.08);
+    padding: 40px;
+    border-radius: 20px;
+    width: 320px;
+    box-shadow: 0 0 25px rgba(0,0,0,0.5);
+    animation: fadeIn 1s ease;
+}
+
+/* أنيميشن */
+@keyframes fadeIn {
+    from {opacity:0; transform: translateY(20px);}
+    to {opacity:1; transform: translateY(0);}
+}
+
+h1 {
+    margin-bottom: 10px;
+}
+
+p {
+    font-size: 14px;
+    opacity: 0.8;
+}
+
+/* زر */
+button {
+    margin-top: 15px;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 10px;
+    background: #00c6ff;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #0072ff;
+}
+
+/* الشات */
+.chat-box {
+    margin-top: 20px;
+    background: rgba(0,0,0,0.3);
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.messages {
+    height: 120px;
+    overflow-y: auto;
+    font-size: 13px;
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+input {
+    width: 65%;
+    padding: 5px;
+    border-radius: 5px;
+    border: none;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🚀 FlowPay</h1>
+<p>مرحباً بك 👋<br>تطبيق لتحويل الأموال بسهولة وسرعة</p>
+
+<a href="https://money-transfer-hub--nevenjepreal.replit.app/">
+<button>فتح التطبيق</button>
+</a>
+
+<div class="chat-box">
+<div class="messages" id="messages"></div>
+
+<input id="userInput" placeholder="اكتب سؤالك...">
+<button onclick="sendMessage()">إرسال</button>
+</div>
+
+</div>
+
+<script>
+function sendMessage() {
+    let input = document.getElementById("userInput");
+    let msg = input.value.trim();
+    let messages = document.getElementById("messages");
+
+    if(msg === "") return;
+
+    messages.innerHTML += "<div>👤: " + msg + "</div>";
+
+    let reply = "🤖 لم أفهم سؤالك، حاول تسأل بطريقة مختلفة.";
+
+    if(msg.includes("تحويل")) {
+        reply = "💸 يمكنك تحويل الأموال عبر إدخال الرقم والمبلغ ثم الضغط على تأكيد.";
+    }
+    else if(msg.includes("مشكلة")) {
+        reply = "⚠️ إذا واجهت مشكلة، تأكد من الإنترنت أو أعد المحاولة.";
+    }
+    else if(msg.includes("تطبيق")) {
+        reply = "📱 FlowPay هو تطبيق لتحويل الأموال بسرعة وسهولة.";
+    }
+    else if(msg.includes("مرحبا")) {
+        reply = "👋 أهلاً بك! كيف أقدر أساعدك؟";
+    }
+
+    messages.innerHTML += "<div>" + reply + "</div>";
+
+    input.value = "";
+    messages.scrollTop = messages.scrollHeight;
+}
+</script>
+
+</body>
+</html>
