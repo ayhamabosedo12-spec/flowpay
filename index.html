@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<title>FlowPay</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial;
+    background: linear-gradient(135deg, #0f2027, #2c5364);
+    color: white;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    text-align: center;
+}
+
+button {
+    padding: 12px 25px;
+    font-size: 16px;
+    border: none;
+    border-radius: 10px;
+    background: #00c6ff;
+    color: white;
+    cursor: pointer;
+}
+
+.chat-box {
+    margin-top: 20px;
+    width: 300px;
+    background: rgba(255,255,255,0.1);
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.messages {
+    height: 150px;
+    overflow-y: auto;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+input {
+    width: 70%;
+    padding: 5px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>👋 أهلاً بك في FlowPay</h1>
+<p>تطبيق لتحويل الأموال بسهولة وسرعة</p>
+
+<a href="https://money-transfer-hub--nevenjepreal.replit.app/">
+<button>فتح التطبيق</button>
+</a>
+
+<div class="chat-box">
+<div class="messages" id="messages"></div>
+
+<input id="userInput" placeholder="اكتب سؤالك...">
+<button onclick="sendMessage()">إرسال</button>
+</div>
+
+</div>
+
+<script>
+function sendMessage() {
+    let input = document.getElementById("userInput");
+    let msg = input.value;
+    let messages = document.getElementById("messages");
+
+    if(msg === "") return;
+
+    messages.innerHTML += "<div>👤: " + msg + "</div>";
+
+    let reply = "ما فهمت سؤالك";
+
+    if(msg.includes("تحويل")) {
+        reply = "يمكنك تحويل الأموال عبر إدخال الرقم والمبلغ ثم تأكيد العملية.";
+    }
+    else if(msg.includes("مشكلة")) {
+        reply = "إذا واجهت مشكلة، تأكد من الاتصال بالإنترنت أو حاول مرة أخرى.";
+    }
+    else if(msg.includes("تطبيق")) {
+        reply = "FlowPay هو تطبيق لتحويل الأموال بسهولة.";
+    }
+
+    messages.innerHTML += "<div>🤖: " + reply + "</div>";
+
+    input.value = "";
+}
+</script>
+
+</body>
+</html>
