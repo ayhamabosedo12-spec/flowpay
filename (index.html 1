@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<title>Money Transfer Hub</title>
+
+<style>
+body {
+  font-family: Arial;
+  background:#0f172a;
+  color:white;
+  text-align:center;
+}
+
+button {
+  padding:12px;
+  margin:10px;
+  background:#22c55e;
+  border:none;
+  color:white;
+  cursor:pointer;
+}
+
+#chatBox {
+  display:none;
+  margin-top:20px;
+}
+
+#messages {
+  height:200px;
+  overflow:auto;
+  border:1px solid #333;
+  padding:10px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- 🔥 واجهة الترحيب -->
+<div id="welcome">
+  <h1>💸 Money Transfer Hub</h1>
+  <p>تحويل أموال ذكي وسريع</p>
+  <button onclick="enterApp()">ابدأ</button>
+  <br>
+  <button onclick="openChat()">💬 تسجيل</button>
+</div>
+
+<!-- 🔥 التطبيق -->
+<div id="app" style="display:none;">
+  <h2>👋 أهلاً بك داخل التطبيق</h2>
+  <button onclick="openChat()">💬 الشات</button>
+</div>
+
+<!-- 🔥 الشات -->
+<div id="chatBox">
+  <div id="messages"></div>
+  <input id="input" placeholder="اكتب هنا..." />
+  <button onclick="send()">إرسال</button>
+</div>
+
+<script>
+let approved = false;
+let step = "";
+let approvedCode = "1234"; // 👈 غيره كل مرة
+
+function enterApp(){
+  if(!approved){
+    alert("❌ لازم تسجل أولاً ويتم قبولك");
+    openChat();
+    return;
+  }
+
+  document.getElementById("welcome").style.display="none";
+  document.getElementById("app").style.display="block";
+}
+
+function openChat(){
+  document.getElementById("chatBox").style.display="block";
+}
+
+function addMessage(msg){
+  document.getElementById("messages").innerHTML += "<div>"+msg+"</div>";
+}
+
+function send(){
+  let input = document.getElementById("input").value;
+  addMessage("👤: " + input);
+
+  let response = aiResponse(input);
+  addMessage("🤖: " + response);
+
+  document.getElementById("input").value="";
+}
+
+function aiResponse(text){
+  text = text.toLowerCase();
+
+  // 🔥 تحويل أموال
+  if(text.includes("حول")){
+    return "💸 تم تنفيذ التحويل (وهمي) بنجاح";
+  }
+
+  // 🔥 بدء التسجيل
+  if(text.includes("تسجيل")){
+    step = "name";
+    return "📋 شو اسمك؟";
+  }
+
+  // 👤 الاسم
+  if(step === "name"){
+    window.userName = text;
+    step = "phone";
+    return "📱 اكتب رقمك";
+  }
+
+  // 📱 الرقم
+  if(step === "phone"){
+    window.userPhone = text;
+    step = "waiting";
+
+    console.log("USER:", window.userName, window.userPhone);
+
+    // 🔥 هون تقدر ترسل البيانات لإلك (اختياري)
+    /*
+    fetch("YOUR_WEBHOOK_URL", {
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body: JSON.stringify({
+        content: "تسجيل جديد:\nالاسم: " + window.userName + "\nالرقم: " + window.userPhone
+      })
+    });
+    */
+
+    return "⏳ تم إرسال طلبك. انتظر الموافقة من الإدارة";
+  }
+
+  // 🔑 إدخال الكود
+  if(text.includes("كود")){
+    let code = text.replace(/\D/g,'');
+
+    if(code === approvedCode){
+      approved = true;
+      return "✅ تم تفعيل حسابك! اضغط ابدأ للدخول";
+    } else {
+      return "❌ الكود غير صحيح";
+    }
+  }
+
+  // ❓ أسئلة
+  if(text.includes("شو التطبيق")){
+    return "هذا تطبيق لتحويل الأموال الوهمية بطريقة ذكية";
+  }
+
+  if(text.includes("كيف")){
+    return "اكتب: حول 50 لمحمد وأنا بنفذها 😉";
+  }
+
+  return "🤖 اكتب (تسجيل) للبدء";
+}
+</script>
+
+</body>
+</html>
